@@ -2,6 +2,10 @@
 
 > **DataAtlas** is a full-stack observability and metadata intelligence platform for **Databricks Unity Catalog**. It provides real-time catalog browsing, lineage tracing, impact analysis, workflow monitoring, and ownership governance — all in a beautiful, production-ready web UI.
 
+### 🌐 Live Production Deployments
+- **Frontend App**: [https://data-atlas-sooty.vercel.app](https://data-atlas-sooty.vercel.app)
+- **Backend API**: [https://data-atlas-backend.vercel.app](https://data-atlas-backend.vercel.app)
+
 ---
 
 ## ✨ Features at a Glance

@@ -35,6 +35,24 @@ const AppLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Dynamic Page Title SEO handler
+  useEffect(() => {
+    const path = location.pathname;
+    let title = 'DataAtlas | Databricks Unity Catalog Metadata Platform';
+    
+    if (path === '/') title = 'DataAtlas | Executive Observability Dashboard';
+    else if (path.startsWith('/search')) title = 'DataAtlas | Global Catalog Search Index';
+    else if (path.startsWith('/catalog')) title = 'DataAtlas | Unity Catalog Schema Explorer';
+    else if (path.startsWith('/lineage')) title = 'DataAtlas | Interactive Data Lineage Graph';
+    else if (path.startsWith('/impact')) title = 'DataAtlas | Blast Radius Impact Analyzer';
+    else if (path.startsWith('/jobs')) title = 'DataAtlas | Workflows & Jobs Observability';
+    else if (path.startsWith('/pipelines')) title = 'DataAtlas | DLT Data Pipelines Monitor';
+    else if (path.startsWith('/ownership')) title = 'DataAtlas | Governance & Ownership Hub';
+    else if (path.startsWith('/analytics')) title = 'DataAtlas | Storage Growth & DBU Analytics';
+    
+    document.title = title;
+  }, [location]);
+
   // Secure connection states and window interface
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
   const [connHost, setConnHost] = useState('');

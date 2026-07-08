@@ -1,6 +1,11 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
+// Dynamically configure remote or local API gateway target
+if (import.meta.env.VITE_API_URL) {
+  axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+}
+
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {

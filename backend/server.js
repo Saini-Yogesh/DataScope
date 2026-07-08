@@ -24,6 +24,17 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Base check route
+app.get('/', (req, res) => {
+  const hasLiveCreds = process.env.DATABRICKS_HOST && process.env.DATABRICKS_TOKEN;
+  res.json({
+    status: 'success',
+    message: 'DataAtlas Backend API Server is running',
+    version: '1.0.0',
+    mode: hasLiveCreds ? 'Live Workspace' : 'Simulation'
+  });
+});
+
 // API Gateway routes
 app.use('/api', apiRouter);
 
@@ -31,12 +42,16 @@ app.use('/api', apiRouter);
 app.use(errorHandler);
 
 // Launch server listener
-app.listen(PORT, () => {
-  const hasLiveCreds = process.env.DATABRICKS_HOST && process.env.DATABRICKS_TOKEN;
-  const mode = hasLiveCreds ? `Live Workspace (${process.env.DATABRICKS_HOST})` : 'Simulation';
-  console.log(`=============================================`);
-  console.log(`🚀 DataAtlas Metadata Server Running on port ${PORT}`);
-  console.log(`👉 API Endpoints: http://localhost:${PORT}/api`);
-  console.log(`🛠️  Mode: ${mode}`);
-  console.log(`=============================================`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    const hasLiveCreds = process.env.DATABRICKS_HOST && process.env.DATABRICKS_TOKEN;
+    const mode = hasLiveCreds ? `Live Workspace (${process.env.DATABRICKS_HOST})` : 'Simulation';
+    console.log(`=============================================`);
+    console.log(`🚀 DataAtlas Metadata Server Running on port ${PORT}`);
+    console.log(`👉 API Endpoints: http://localhost:${PORT}/api`);
+    console.log(`🛠️  Mode: ${mode}`);
+    console.log(`=============================================`);
+  });
+}
+
+export default app;
